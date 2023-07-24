@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://uocat.com/posts/3675/</loc>
+    
+    <lastmod>2023-07-24</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://uocat.com/posts/6fcf/</loc>
     
     <lastmod>2023-07-24</lastmod>
@@ -66,15 +75,6 @@
   
   <url>
     <loc>https://uocat.com/services/</loc>
-    
-    <lastmod>2023-07-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://uocat.com/posts/3675/</loc>
     
     <lastmod>2023-07-24</lastmod>
     
