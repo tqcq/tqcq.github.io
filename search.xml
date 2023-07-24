@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>docker-issue</title>
+      <link href="/posts/5954/"/>
+      <url>/posts/5954/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1>&gt;&gt; Docer 常见问题</h1><h2 id="1-CI-CD-如何利用已有-Image-缓存"><a class="header-anchor" href="#1-CI-CD-如何利用已有-Image-缓存">¶</a>1. CI/CD 如何利用已有  Image 缓存</h2><p><strong>背景</strong>: 在流水线构建中，每次都可能是一个新的环境，想要利用已有镜像的缓存</p><div class="admonition todo"><p class="admonition-title">解决方案</p><p>通过每次拉取相关镜像，并指定将其作为缓存即可，同时减小 push 的大小。</p></div><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull <span class="variable">$BASE_IMAGE</span>` || <span class="built_in">echo</span> <span class="string">&quot;no image&quot;</span></span><br><span class="line">docker build --cache-from <span class="variable">$BASE_IMAGE</span> -t mytag</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>ResilioSyncProKey</title>
       <link href="/posts/3675/"/>
       <url>/posts/3675/</url>
