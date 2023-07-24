@@ -11,6 +11,20 @@
         <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1>&gt;&gt; Docer 常见问题</h1><h2 id="1-CI-CD-如何利用已有-Image-缓存"><a class="header-anchor" href="#1-CI-CD-如何利用已有-Image-缓存">¶</a>1. CI/CD 如何利用已有  Image 缓存</h2><p><strong>背景</strong>: 在流水线构建中，每次都可能是一个新的环境，想要利用已有镜像的缓存</p><div class="admonition todo"><p class="admonition-title">解决方案</p><p>通过每次拉取相关镜像，并指定将其作为缓存即可，同时减小 push 的大小。</p></div><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull <span class="variable">$BASE_IMAGE</span>` || <span class="built_in">echo</span> <span class="string">&quot;no image&quot;</span></span><br><span class="line">docker build --cache-from <span class="variable">$BASE_IMAGE</span> -t mytag</span><br></pre></td></tr></table></figure>]]></content>
       
       
+      <categories>
+          
+          <category> Container </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> docker </tag>
+            
+            <tag> cache </tag>
+            
+        </tags>
       
     </entry>
     
@@ -24,6 +38,20 @@
         <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h2 id="这是一个-ResilioSync-的-Pro-许可证"><a class="header-anchor" href="#这是一个-ResilioSync-的-Pro-许可证">¶</a>这是一个 ResilioSync 的 Pro 许可证</h2><div class="admonition warning"><p class="admonition-title">提供文件的 MD5 如下</p><p>faf812f3cc2de8988ccb310bad30a145</p></div><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 拷贝执行下面的代码即可在当前目录生成许可证</span></span><br><span class="line">ResilioSyncProKey=<span class="string">&quot;YnRvczFfZXlKeklqb2dJbTV4TmpSbU5HZ3JXRGh4V0hGaWFXUm9kRXR5VFdkTmNFVmFNSGRZYVVKTGJFeHdTV0Z3U0RVeE16a3lhSGRxTUZGcFFXSk9UVEZHZDJKR1dHcEpRMEZoVjJ3NFYzWmlkVnBQZW5wSVRYWm1OVFJMV1UxWFZHVnNWRlpqUzNKR1FVcFlNbVZVTUd0dFQybENNbTh6UTFCalZGZDJWV2xDTHpSc1RUbFFOMUZzYWxWU1Z6UkVNVkZOVWt0V2NFaHdhRzVJVnpJdlptZHFOMDVNYVRobU1uaE5hMU5ETkVSd1JWVnBRMHBYWkhwUFdYRkliVzFPTUZkT1VFdDZRV2c0UmtKb2FuTnZVVk5CYTFoS04wOVdTMGM1V0Vsa1ZUY3pXbk5sVldOeFdXMVdWVW8wV0RjMFMwNXdZbWxZWmswdmVtbHNVMnBJSzBVNVkzWk1aMDkyWWxwbFZqbENaWGx2ZUROd1QzcFJZVUpPZUZOUVQzRllXRXBUUkhFMWJWUmhSWE12V0dwcFZHdEpWMjF1VkhKdWRWSm5iMDFEWjBSQk9IZEJTM1JJWWpSdlZrZHVXbTFqZVU4eE5saG9RM2R2TDJWa2VIRnhaejA5SWl3Z0ltUWlPaUFpWlhsS2FtRjVTVFpKUTBwcFpFYzVlbGw2Um1aYVdHeExZVzFPTlZOVVdrcFJNSEJKVmxab1lWWXhSbGRVYWtac1ZsZG9XVlpyV2xkTk1VcFhVMnRXVlZKVVJsWlpWRVpYWkZaYWNWVnNVbXBOTVVwNVdrY3hkMUZzVWtWUlZGWldVWHBzTVZacmFHdFVWazV3VDBoc1VGRXpVak5VVjNoclZqSk9jazFJYUZWaGVsSTFWWHBPUTFReVVsaGlSM1JUWWxWd2IxWnROVXRVUmxKWlZWUldWRko2UlhwV1ZWVTFUVlp3ZFZkdFJsVldiVkoxVlZkNFNrMXNXWGxYYmtac1ltMTRiMVpXYUhkbGJFVjNUVlZLYW1KWGFFNVhWbFl3WkZad1ZWSllaRlJTYkVwT1ZXNXdVMkpHYkhCa1JYQlZWbFJHU2xZd1VuTldNa1Y1WkVaU2FsWkZSWGRVYlRWdVRVZEtjazFXWkU1U1IyTjNWbXhXWVZSc1NuSk5WemxxVWxWd01GbFZVbE5sUlRGSllrWmFXbUV4UlhoVmJURnpUVVV4U1ZwSVpFNWlSM2hWV1d4b2IxSXlUa1ZTYkU1c1ZsaGtlVlZzV205T1YwWkdVbFJPVW1KV1NuVldWRVpEWVVkS1NWWnJXa3hOVjNoWlZtcEdiMkZ0U2pWUFZXeFNWbFJzVDFsdE1UTk5iRTV6VWxSQ1lXRnNTbEZXYlhCQ1pVWlJkMVZyU2xwaGExWjVWMjB3TVdSVk5YVlhibFpTVFRKbmVsbDZSbGRUYXpsR1RWVTFhRk5IZUZGVVJFRTFUVVpPYzJKRldsZFRSa3BYVmxWYVNrMXNVa1JrUmtwWFVqSm9VbFl3VWxOamJHeHlUbGhHVGxKSGVGcFhibXd3WWpKR1ZrMVZlRlpXTVZwVlUzcENkMlJGTlRaVmJscFVZVzE0U1ZwRVFuSmxWa1owVFZWc2FsSkdXWGRXUmxaVFpFWnJlV1ZJY0U5V2JXaExWMVprYjFNeFpFZFNhMXBxVFVoU01WVnNhRmRsYkUxM1ZHcFNhVkpzU2pWVVZtUjNaRmRPU0dGRk5XRmxiRlYzV1cweE5HSkZPVlZoUnpsVVUwVldlVlZXYUU1TlYxWlpWV3hTVGxJeVRUVlZSazVLWXpCc1JGTnRjR0ZSTUdzeVUxVk9TMkpIVmxaalNHUmFZbFJHYUZwSGRITmpWMGw1V2tkNGJGWllRVEpYYTJONFZERktTRk5ZYkZaaVdHaExXVmN3TldKc1RsaE9WVGxQVmpCd01GWkhlRWRoYlVwVllVaENWVkpWTlVOWlZscHlaVmRTU1ZGdFJsSk5SM041VlRGV1QxTXlWa2RXYmxKWFZrVktWRmx0Y3pGamJHdDNWMnMxVG1KVlZqTmFWVll3WVcxV2MxTnNhRnBsYTBweVZGVmFSbVZHUm5SbFJtUlVVbFJXTlZVeFpITk5NVzkzWWtoU1YyRnNTbkZWVkVKeVRXeE9WbFZyY0d4U1ZGWkdWbXhTVjFSc1drZGhla0pWVmxaS1ExbDZRbk5TUms1MFkwZHdUazFWV25kV1JFcHpVVzFHV0ZOcVZrNVdlbFpRVm10YVlWVkdiRFpSYlRsb1lrWndlbFpzWkhOVVZrVjNVbTVDWVZKWGFIcGFSRVozVmtaT1ZWZHJjRkpOU0VGNlZqSjRiMU15Vm5SVFdHeFBWakpvY0ZWVVFuTmxiRTVXVkd0MGEySlZOVXBXVnpWM1UyMUdkRTlYTldGWFIzaE1XV3hrU21WWFZraGtSMFpZVWxoQ1ZsWXllR3RVTWxaWFkwWnNWbFl5ZUZGWlZsWkhZMFpTZEdNemFGVk5WbHBJVmpKNFlWWkdTa2hWYTA1VlYwaENWRll5ZUVkV2JGWlZVbXhvVTFaR1draFdWM1JYVlRGV1YxVnJXazlXVm5CWVZGWldkMVV4VWxoalJrNVZWbXhzTkZkcVNuTlVWa1YzVW01Q1dtVnJjRmhaVldSVFUxWlNXR0pHUW1oV1ZWa3dWMjE0Ym1ReVRYZGlSVkpVWWxob2MxVXdWa2RqUmxGNVlrVktiRlpVUmxaV1ZsSkhWVVphUmxaWWJGVk5Sa3BEV2tSS1lWVnNRbFZOUjJ4dFZWUXdPVWxwZDJkSmJXeDFXbTA0YVU5cFFqZEpiVGw1V2tkV2VWTlhVV2xQYVVGcFdWYzFhR1JYZUcxWlZ6VXhZVEphZFdJeWRIVmlWekY2VFVSWk5XTlhiek5PUTBselNVTkthR05wU1RaSlJFRnpTVU5LYkdWSVFXbFBhVUY1VFZSUk1VOVVSVEpQUkVGM1RFTkJhVmt6U214SmFtOW5UVlJSTkUxVVVYbE9lazAwVG5sM1owbHVUakpaTUd4clNXcHZaMGx1VGpWaWJVNVJZMjA0ZUVscGQyZEpiVTU2WkVOSk5rbERTblpNVjJNeFRsVTFlbE5IVGxkV1UwbHpTVU5LZW1SdFRrUmlNbEpzU1dwdlowbHVUalZpYlU1UlkyMDRhVXhEUVdsWk1teHJTV3B2WjBsdFpIRmFWMjk1WW1sSmMwbERTakJsV0VKc1NXcHZaMGx1UW14amJrNTJZbTFHYzBscGQyZEpiVGwzWkVoTmFVOXBRamRKYlZwMllrZFNiR05zVG14Wk0wcHNaRU5KTmtsRFNrSldNRkpPVkhwU1JsVXhUa0pVYkdoQ1YyeEtWRTFyTUhsT1JscENUbXRrUWxJeFNsaFdWRkpSVGxaWmFVeERRV2xqTWxab1pFaE5hVTlwUVhobVdEQnpTVU5LYkdWSVFXbFBhVUY1VFZSUk1VOVVSVEpQUkVGM1psRTlQU0o5&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$ResilioSyncProKey</span> | <span class="built_in">base64</span> -d &gt; ResilioSyncPro.btskey</span><br></pre></td></tr></table></figure>]]></content>
       
       
+      <categories>
+          
+          <category> License </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> resiliosync </tag>
+            
+            <tag> btsync </tag>
+            
+        </tags>
       
     </entry>
     
@@ -39,14 +67,16 @@
       
       <categories>
           
-          <category> network </category>
+          <category> Linux </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> linux </tag>
+            <tag> epoll </tag>
+            
+            <tag> network </tag>
             
         </tags>
       
