@@ -92,9 +92,12 @@
       }
 
       // Check for mobile
+      // skip this check
+      /*
       if(Engine.isMobile()) {
         window.location = 'mobileWarning.html';
       }
+      */
 
       Engine.disableSelection();
 
