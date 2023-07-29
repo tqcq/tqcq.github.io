@@ -119,6 +119,7 @@
         .addClass('menu')
         .appendTo('body');
 
+
       if(typeof langs != 'undefined'){
         var customSelect = $('<span>')
           .addClass('customSelect')
@@ -197,6 +198,13 @@
           .click(Engine.Dropbox.startDropbox)
           .appendTo(menu);
       }
+
+      $('<span>')
+        .addClass('menuBtn')
+        .text(_('Home'))
+        .click(function() { window.window.location.assign("/"); })
+        .appendTo(menu);
+
 
       /*
       $('<span>')
