@@ -8,6 +8,24 @@
         });
         return uuid;
       };
+      function parseQueryString(url) {
+        var queryString = url.split('?')[1]; // 获取问号后面的部分
+        if (!queryString) {
+          return {}; // 如果没有参数，返回空对象
+        }
+      
+        var params = {};
+        var keyValuePairs = queryString.split('&');
+      
+        keyValuePairs.forEach(function(keyValuePair) {
+          var pair = keyValuePair.split('=');
+          var key = decodeURIComponent(pair[0]); // 解码键
+          var value = decodeURIComponent(pair[1] || ''); // 解码值，若值为空，则设置为空字符串
+          params[key] = value;
+        });
+      
+        return params;
+      }
 
   var Engine = window.Engine = {
 
@@ -278,7 +296,10 @@
         .addClass('menuBtn')
         .attr('id', 'binId')
         .text(_('BinId: ' + localStorage.binId))
-        .click(function() { if (navigator.clipboard) { navigator.clipboard.writeText(localStorage.binId); }; })
+        .click(function() { if (navigator.clipboard) { 
+          var text = window.location.host + window.location.pathname + "?binid=" + localStorage.binId;
+          navigator.clipboard.writeText(text); 
+        }; })
         .appendTo(menu);
 
       /*
@@ -341,7 +362,12 @@
 
       setTimeout(notifyAboutSound, 3000);
 
-      Engine.saveToCloud();
+      queryStr = parseQueryString(window.location.href);
+      if (queryStr['binid'] && queryStr['binid'] != localStorage.binId && queryStr['binid'].length != "undefined") {
+          Engine.loadFromCloud(queryStr['binid']);
+      } else {
+          Engine.saveToCloud();
+      }
       setInterval(Engine.saveToCloud, 1000 * 60 * 5);
 
     },
