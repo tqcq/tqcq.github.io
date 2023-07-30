@@ -253,7 +253,7 @@ Events.Room = [
 				],
 				buttons: {
 					'leave': {
-						text: _('say goodbye'),
+						text: _(''),
 						nextScene: 'end'
 					}
 				}
@@ -367,7 +367,7 @@ Events.Room = [
 				},
 				buttons: {
 					'leave': {
-						text: _('say goodbye'),
+						text: _(''),
 						nextScene: 'end'
 					}
 				}
@@ -470,7 +470,7 @@ Events.Room = [
 				},
 				buttons: {
 					'leave': {
-						text: _('say goodbye'),
+						text: _(''),
 						nextScene: 'end'
 					}
 				}
@@ -676,7 +676,7 @@ Events.Room = [
 				],
 				buttons: {
 					'bye': {
-						text: _('say goodbye'),
+						text: _(''),
 						nextScene: 'end'
 					}
 				}

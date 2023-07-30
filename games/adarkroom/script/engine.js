@@ -167,6 +167,7 @@
     },
 
     init: function(options) {
+
       this.options = $.extend(
         this.options,
         options
@@ -335,6 +336,8 @@
       Events.init();
       Room.init();
 
+      // disable marketing
+      $SM.set('marketing.penrose', true);
 
       if(typeof $SM.get('stores.wood') != 'undefined') {
         Outside.init();

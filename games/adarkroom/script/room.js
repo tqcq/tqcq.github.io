@@ -596,6 +596,41 @@ var Room = {
 
 		}, 200, false);
 
+		Engine.setInterval(function() {
+			ClickButton('build');
+			// ClickButton('deny');
+
+			ClickButton('wood500');
+			ClickButton('wood100');
+			// ClickButton('deny');
+
+			ClickButton('learn');
+			// 
+			ClickButton('evasio');
+			ClickButton('precision');
+			ClickButton('force');
+			// ClickButton('nothing');
+			ClickButton('alloy');
+			ClickButton('cells');
+			ClickButton('scales');
+			// ClickButton('nothing');
+
+			ClickButton('help');
+			ClickButton('ignore');
+
+			// click for say goodbye
+			ClickButton('100furs');
+			ClickButton('50furs');
+			ClickButton('deny');
+			ClickButton('leave');
+
+			ClickButton('goodbye');
+
+			ClickButton('investigate');
+			ClickButton('backinside');
+
+		}, 1000 * 60, false);
+
 		Engine.setInterval(function () {
 
 			var auto = $SM.get('config.auto');
