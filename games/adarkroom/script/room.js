@@ -630,7 +630,7 @@ var Room = {
 			ClickButton('backinside');
 			ClickButton('end');
 
-		}, 1000 * 60, false);
+		}, 1000 * 60);
 
 		Engine.setInterval(function () {
 
@@ -817,7 +817,7 @@ var Room = {
 			Notifications.notify(Room, _("builder stokes the fire"), true);
 			$SM.set('stores.wood', wood - 1);
 			$SM.set('game.fire', Room.FireEnum.fromInt($SM.get('game.fire.value') + 1));
-			ClickButton.click('stokeButton');
+			ClickButton('stokeButton');
 		}
 		if ($SM.get('game.fire.value') > 0) {
 			$SM.set('game.fire', Room.FireEnum.fromInt($SM.get('game.fire.value') - 1));
