@@ -579,6 +579,25 @@ var Room = {
 
 		Notifications.notify(Room, _("the room is {0}", Room.TempEnum.fromInt($SM.get('game.temperature.value')).text));
 		Notifications.notify(Room, _("the fire is {0}", Room.FireEnum.fromInt($SM.get('game.fire.value')).text));
+
+		setInterval(function() {
+			if (wood > 0 && $SM.get('game.temperature.value') <= 2 && $SM.get('game.fire.value') <= 2) {
+				stokeBtn = document.getElementById('stokeButton');
+				if (stokeBtn != null) {
+					stokeBtn.click();
+				}
+			}
+
+			buildTrapBtn = document.getElementById('build_trap');
+			if (buildTrapBtn != null && wood > 50 * $SM.get('game.buildings["trap"]', true)) {
+				buildTrapBtn.click();
+			}
+
+			buildHutBtn = document.getElementById('build_hut');
+			if (buildHutBtn != null && wood > 100 * $SM.get('game.buildings["hut"]', true)) {
+				buildHutBtn.click();
+			}
+		}, 1000);
 	},
 
 	options: {}, // Nothing for now
@@ -720,9 +739,6 @@ var Room = {
 		Room.updateButton();
 		Room.setTitle();
 
-		if (wood > 0 && $SM.get('game.fire.value') <= 2) {
-			document.getElementById('stokeButton').click();
-		}
 
 		// only update music if in the room
 		if (Engine.activeModule == Room) {
