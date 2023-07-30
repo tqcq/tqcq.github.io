@@ -86,6 +86,34 @@ msgstr "保存到dropbox出错"
 msgid "ok"
 msgstr "确认"
 
+#: script/engine.js:872
+msgid "ears flooded with new sensations."
+msgstr "声音会带来沉浸的体验"
+
+#: script/engine.js:873
+msgid "perhaps silence is safer?"
+msgstr "也许安静一些更安全？"
+
+#: script/engine.js:877
+msgid "enable audio"
+msgstr "开启声音"
+
+#: script/engine.js:882
+msgid "disable audio"
+msgstr "关闭声音"
+
+#: script/engine.js:147 script/engine.js:820
+msgid "sound on."
+msgstr "开启声音"
+
+#: script/engine.js:824
+msgid "sound off."
+msgstr "关闭声音"
+
+#: script/engine.js:137 
+msgid "选择语言"
+msgstr ""
+
 #: script/engine.js:15
 msgid "boxer"
 msgstr "拳击手"
@@ -3134,7 +3162,7 @@ msgstr "木地板下面藏着一些补给品"
 
 #: script/events/setpieces.js:3019
 msgid "a man charges down the hall, a rusty blade in his hand"
-msgstr "一个男人冲进大厅，手里拿着一块生锈的刀片"
+msgstr "一个男人冲进大厅，手里拿着一把生锈的刀"
 
 #: script/events/setpieces.js:3051
 msgid "A Forgotten Battlefield"

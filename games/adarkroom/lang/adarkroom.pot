@@ -222,6 +222,10 @@ msgstr ""
 msgid "sound on."
 msgstr ""
 
+#: script/engine.js:137 
+msgid "language."
+msgstr ""
+
 #: script/engine.js:153
 msgid "get the app."
 msgstr ""
