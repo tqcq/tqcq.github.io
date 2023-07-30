@@ -48,7 +48,7 @@
     cloud_saving: false,
 
     saveToCloud: function () {
-      if (!Engine.need_cloud_save || Engine.cloud_saving) {
+      if (!Engine.need_cloud_save || Engine.cloud_saving || !$SM.get('config.auto')) {
         return;
       }
       Engine.cloud_saving = true;
@@ -61,8 +61,9 @@
       jsonBin.save(username, binId, Engine.generateExport64())
         .then((r) => {
           if (r && r.length > 0) {
-            binIdBtn = document.getElementById("binId");
+            history.pushState(null, "", window.location.pathname + "?binid=" + r);
             localStorage.binId = r;
+            binIdBtn = document.getElementById("binId");
             if (binIdBtn != null) {
               binIdBtn.innerHTML = "BinId: " + r;
             }
