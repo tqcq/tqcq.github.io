@@ -370,7 +370,7 @@
           $('#saveNotify').css('opacity', 1).animate({opacity: 0}, 1000, 'linear');
           Engine._lastNotify = Date.now();
         }
-        need_cloud_save = true;
+        Engine.need_cloud_save = true;
         localStorage.gameState = JSON.stringify(State);
         if (localStorage.binId == undefined) {
           localStorage.binId = "empty";
