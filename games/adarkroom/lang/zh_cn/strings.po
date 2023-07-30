@@ -110,6 +110,12 @@ msgstr "开启声音"
 msgid "sound off."
 msgstr "关闭声音"
 
+msgid "support import from binId"
+msgstr "支持从binId导入"
+
+msgid "tips: If there is no binid on footer, please wait for half a minute to open it again"
+msgstr "如果页脚没有binId，请等待半分钟再次打开"
+
 #: script/engine.js:137 
 msgid "选择语言"
 msgstr ""

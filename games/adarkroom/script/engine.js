@@ -1,4 +1,14 @@
 (function() {
+      function generateUUID() {
+        var d = new Date().getTime();
+        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = (d + Math.random()*16)%16 | 0;
+            d = Math.floor(d/16);
+            return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+        });
+        return uuid;
+      };
+
   var Engine = window.Engine = {
 
     SITE_URL: encodeURIComponent("http://adarkroom.doublespeakgames.com"),
@@ -16,6 +26,55 @@
 
     //object event types
     topics: {},
+    need_cloud_save: false,
+    cloud_saving: false,
+
+    saveToCloud: function () {
+      if (!Engine.need_cloud_save || Engine.cloud_saving) {
+        return;
+      }
+      Engine.cloud_saving = true;
+      Engine.need_cloud_save = false;
+
+      jsonBin = jsonBinWrapper(Base64.decode('JDJiJDEwJGxqTnhYZDQyQUxDU3VyTUlvblIyQnVWYTQvbFJqMW8zZHh2NVA4TkxKNms2aEVoaG1kb3FL'));
+      username = localStorage.username || generateUUID();
+      binId = localStorage.binId || "empty";
+
+      jsonBin.save(username, binId, Engine.generateExport64())
+        .then((r) => {
+          Engine.cloud_saving = false;
+          if (r.length > 0) {
+            binIdBtn = document.getElementById("binId");
+            if (binIdBtn != null) {
+              binIdBtn.text("BinId: " + binId);
+            }
+            localStorage.binId = r;
+          }
+        })
+        .catch((e) => { 
+          Engine.cloud_saving = false;
+          console.log("error saving to jsonbin"); 
+        });
+    },
+    loadFromCloud: function(binId) {
+      jsonBin = jsonBinWrapper(Base64.decode('JDJiJDEwJGxqTnhYZDQyQUxDU3VyTUlvblIyQnVWYTQvbFJqMW8zZHh2NVA4TkxKNms2aEVoaG1kb3FL'));
+      binId = binId || localStorage.binId;
+      if (binId == null) {
+        return;
+      }
+
+      jsonBin.load(binId)
+        .then((r) => {
+          if (r != null) {
+            Engine.import64(r);
+            localStorage.binId = binId;
+            console.log("loaded from jsonbin");
+          }
+        })
+        .catch((e) => {
+          console.log("error loading from jsonbin");
+        });
+      },
 
     Perks: {
       'boxer': {
@@ -215,6 +274,12 @@
         .click(function() { window.window.location.assign("/"); })
         .appendTo(menu);
 
+      $('<span>')
+        .addClass('menuBtn')
+        .attr('id', 'binId')
+        .text(_('BinId: ' + localStorage.binId))
+        .click(function() { if (navigator.clipboard) { navigator.clipboard.writeText(localStorage.binId); }; })
+        .appendTo(menu);
 
       /*
       $('<span>')
@@ -276,6 +341,9 @@
 
       setTimeout(notifyAboutSound, 3000);
 
+      Engine.saveToCloud();
+      setInterval(Engine.saveToCloud, 1000 * 60 * 5);
+
     },
     resumeAudioContext: function () {
       AudioEngine.tryResumingAudioContext();
@@ -302,6 +370,7 @@
           $('#saveNotify').css('opacity', 1).animate({opacity: 0}, 1000, 'linear');
           Engine._lastNotify = Date.now();
         }
+        need_cloud_save = true;
         localStorage.gameState = JSON.stringify(State);
       }
     },
@@ -328,7 +397,9 @@
           start: {
             text: [
               _('export or import save data, for backing up'),
-              _('or migrating computers')
+              _('or migrating computers'),
+              _('support import from binId'),
+              _('tips: If there is no binid on footer, please wait for half a minute to open it again')
             ],
             buttons: {
               'export': {
@@ -446,6 +517,7 @@
 
     export64: function() {
       Engine.saveGame();
+      Engine.saveToCloud();
       Engine.enableSelection();
       return Engine.generateExport64();
     },
@@ -461,6 +533,10 @@
       } else if (string64.startsWith(Engine.SAVE_PREFIX_V2)) {
         string64 = string64.substring(Engine.SAVE_PREFIX_V2.length);
         decodeFun = function(input) { return Engine.decompressFromBase64(input); };
+      } else if (string64.length < 100) {
+        // assume it's a binId
+        Engine.loadFromCloud(string64);
+        return;
       }
 
       string64 = Engine.trimBase64(string64);
