@@ -926,7 +926,7 @@ var Room = {
 				$SM.startThieves();
 			}
 
-			var valueText = num.toString();
+			var valueText = Math.floor(num).toString();
 			if (num > 9999) {
 				valueText = Math.floor(num / 1000) + ' K';
 			}
