@@ -201,6 +201,15 @@ div.row_val {
 	float: right;
 }
 
+div.row_delta {
+	float: right;
+	color: red;
+}
+
+div.positive {
+	color: green;
+}
+
 div.total {
 	font-weight: bold;
 }

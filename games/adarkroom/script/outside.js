@@ -173,6 +173,12 @@ var Outside = {
 			if (trapBtn != null) {
 				trapBtn.click();
 			}
+
+			var buildTrapBtn = document.getElementById('build_trap');
+			// check wood
+			if (buildTrapBtn != null && $SM.get('game.stores.wood') >= 1000) {
+				buildTrapBtn.click();
+			}
 		}, 1000);
 		
 		// Create the gather button

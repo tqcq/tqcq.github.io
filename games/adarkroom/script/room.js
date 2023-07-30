@@ -884,6 +884,7 @@ var Room = {
 			if (row.length === 0) {
 				row = $('<div>').attr('id', id).addClass('storeRow');
 				$('<div>').addClass('row_key').text(lk).appendTo(row);
+				$('<div>').addClass('row_delta').text('').appendTo(row);
 				$('<div>').addClass('row_val').text(Math.floor(num)).appendTo(row);
 				$('<div>').addClass('clear').appendTo(row);
 				var curPrev = null;
@@ -1002,7 +1003,7 @@ var Room = {
             } else {
                 delta_view.text("(" + (pos_delta ? '+' : '') + income_delta + ")");
                 delta_view.toggleClass("positive", pos_delta);
-            }
+            } 
             if (tt.children().length > 0) {
                 tt.appendTo(el);
             }
