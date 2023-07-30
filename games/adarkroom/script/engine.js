@@ -43,10 +43,10 @@
       jsonBin.save(username, binId, Engine.generateExport64())
         .then((r) => {
           Engine.cloud_saving = false;
-          if (r.length > 0) {
+          if (r && r.length > 0) {
             binIdBtn = document.getElementById("binId");
             if (binIdBtn != null) {
-              binIdBtn.text("BinId: " + binId);
+              binIdBtn.text("BinId: " + r);
             }
             localStorage.binId = r;
           }
