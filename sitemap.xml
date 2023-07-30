@@ -9,15 +9,6 @@
 
   
   <url>
-    <loc>https://uocat.com/services/</loc>
-    
-    <lastmod>2023-07-30</lastmod>
-    
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://uocat.com/later/</loc>
     
     <lastmod>2023-07-30</lastmod>
@@ -28,6 +19,15 @@
   
   <url>
     <loc>https://uocat.com/search/</loc>
+    
+    <lastmod>2023-07-30</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://uocat.com/services/</loc>
     
     <lastmod>2023-07-30</lastmod>
     

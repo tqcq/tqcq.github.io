@@ -720,7 +720,7 @@ var Room = {
 		Room.updateButton();
 		Room.setTitle();
 
-		if (wood > 50 && $SM.get('game.fire.value') <= 2) {
+		if (wood > 0 && $SM.get('game.fire.value') <= 2) {
 			document.getElementById('stokeButton').click();
 		}
 
