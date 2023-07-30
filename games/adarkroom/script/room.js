@@ -611,9 +611,9 @@ var Room = {
 			if (wood > 0 && fireLevel + tempLevel < 4) {
 				ClickButton('stokeButton');
 				ClickButton('lightButton');
-				console.log('fireLevel: ' + fireLevel + ', tempLevel: ' + tempLevel + " stock");
+				// console.log('fireLevel: ' + fireLevel + ', tempLevel: ' + tempLevel + " stock");
 			} else {
-				console.log('fireLevel: ' + fireLevel + ', tempLevel: ' + tempLevel);
+				// console.log('fireLevel: ' + fireLevel + ', tempLevel: ' + tempLevel);
 			}
 
 			if (wood > 50 * $SM.get('game.buildings["trap"]', true)) {

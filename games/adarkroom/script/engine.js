@@ -34,12 +34,15 @@
     MAX_STORE: 99999999999999,
     SAVE_DISPLAY: 30 * 1000,
     GAME_OVER: false,
-    SAVE_PREFIX_V1: 'https://uocat.com/games/adarkroom/-v1-',
-    SAVE_PREFIX_V2: 'https://uocat.com/games/adarkroom/-v2-',
+    SAVE_PREFIX_V1: window.location.origin + '/games/adarkroom/-v1-',
+    SAVE_PREFIX_V2: window.location.origin + '/games/adarkroom/-v2-',
+    SAVE_PREFIX_V3: window.location.origin + '/games/adarkroom/?',
     /**
      * origin : base64
      * v1: LZString + base64
      * v2: pako + base64
+     * v3: pako + base64
+     *     args: required version=3&save=base64
      */
 
     //object event types
@@ -61,7 +64,7 @@
       jsonBin.save(username, binId, Engine.generateExport64())
         .then((r) => {
           if (r && r.length > 0) {
-            history.pushState(null, "", window.location.pathname + "?binid=" + r);
+            // history.pushState(null, "", window.location.pathname + "?binid=" + r);
             localStorage.binId = r;
             binIdBtn = document.getElementById("binId");
             if (binIdBtn != null) {
@@ -298,7 +301,8 @@
         .attr('id', 'binId')
         .text(_('BinId: ' + localStorage.binId))
         .click(function() { if (navigator.clipboard) { 
-          var text = window.location.host + window.location.pathname + "?binid=" + localStorage.binId;
+          // var text = window.location.host + window.location.pathname + "?binid=" + localStorage.binId;
+          var text = Engine.generateExport64();
           navigator.clipboard.writeText(text); 
         }; })
         .appendTo(menu);
@@ -364,7 +368,9 @@
       setTimeout(notifyAboutSound, 3000);
 
       queryStr = parseQueryString(window.location.href);
-      if (queryStr['binid'] && queryStr['binid'] != localStorage.binId && queryStr['binid'].length != "undefined") {
+      if (queryStr['version'] && queryStr['version'] == '3' && queryStr['save'] && queryStr['save'].length > 0) {
+          Engine.import64(window.location.href);
+      } else if (queryStr['binid'] && queryStr['binid'] != localStorage.binId && queryStr['binid'].length != "undefined") {
           Engine.loadFromCloud(queryStr['binid']);
       } else {
           Engine.saveToCloud();
@@ -404,6 +410,7 @@
           Engine.saveToCloud();
         }
       }
+      /* history.pushState(null, "", window.location.pathname + "?" + Engine.generateExport64().substring(Engine.SAVE_PREFIX_V3.length)); */
     },
 
     loadGame: function() {
@@ -543,7 +550,7 @@
       // console.log('LZString.compressToBase64', string64.length);
       // console.log('pako.compressToBase64', pako64.length);
 
-      return Engine.SAVE_PREFIX_V2 + Engine.trimBase64(string64);
+      return Engine.SAVE_PREFIX_V3 + "version=3&save=" + Engine.trimBase64(string64);
     },
 
     export64: function() {
@@ -557,13 +564,30 @@
       Engine.event('progress', 'import');
       Engine.disableSelection();
       var decodeFun = function(input) { return Base64.decode(input); };
-      if (string64.startsWith(Engine.SAVE_PREFIX_V1)) {
-        // remove SAVE_PREFIX prefix
-        string64 = string64.substring(Engine.SAVE_PREFIX_V1.length);
-        decodeFun = function(input) { return LZString.decompressFromBase64(input); };
+      if (string64.startsWith(Engine.SAVE_PREFIX_V3)) {
+        args = parseQueryString(string64);
+        if (!args['version'] || args['version'] != '3') {
+          console.log('invalid version', args['version'])
+          return;
+        }
+
+        if (args['save'] && args['save'].length > 0) {
+          string64 = args['save'];
+          decodeFun = function(input) { return Engine.decompressFromBase64(input); };
+        } else if (args['binid'] && args['binid'].length > 0) {
+          Engine.loadFromCloud(args['binid']);
+          return;
+        } else {
+          return;
+        }
+
       } else if (string64.startsWith(Engine.SAVE_PREFIX_V2)) {
         string64 = string64.substring(Engine.SAVE_PREFIX_V2.length);
         decodeFun = function(input) { return Engine.decompressFromBase64(input); };
+      } else if (string64.startsWith(Engine.SAVE_PREFIX_V1)) {
+        // remove SAVE_PREFIX prefix
+        string64 = string64.substring(Engine.SAVE_PREFIX_V1.length);
+        decodeFun = function(input) { return LZString.decompressFromBase64(input); };
       } else if (string64.length < 100) {
         // assume it's a binId
         Engine.loadFromCloud(string64);
@@ -573,8 +597,12 @@
       string64 = Engine.trimBase64(string64);
       var gameState = decodeFun(string64); // decodeFun(string64);
       localStorage.gameState = gameState;
-        
-      location.reload();
+
+      arr = window.location.href.split('?');
+      if (arr.length > 1) {
+        window.location.href = arr[0];
+      }
+      // location.reload();
     },
 
     event: function(cat, act) {
