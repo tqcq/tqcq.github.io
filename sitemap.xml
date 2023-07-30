@@ -36,6 +36,24 @@
   </url>
   
   <url>
+    <loc>https://uocat.com/about/</loc>
+    
+    <lastmod>2023-07-30</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://uocat.com/friends/</loc>
+    
+    <lastmod>2023-07-30</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://uocat.com/posts/3675/</loc>
     
     <lastmod>2023-07-30</lastmod>
@@ -64,24 +82,6 @@
   
   <url>
     <loc>https://uocat.com/posts/f84b/</loc>
-    
-    <lastmod>2023-07-30</lastmod>
-    
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://uocat.com/about/</loc>
-    
-    <lastmod>2023-07-30</lastmod>
-    
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://uocat.com/friends/</loc>
     
     <lastmod>2023-07-30</lastmod>
     

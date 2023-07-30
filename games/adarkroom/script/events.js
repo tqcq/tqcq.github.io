@@ -32,7 +32,7 @@ var Events = {
 			Events.Global,
 			Events.Room,
 			Events.Outside,
-      Events.Marketing
+      		Events.Marketing
 		);
 
 		Events.eventStack = [];
