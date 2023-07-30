@@ -47,7 +47,7 @@
             binIdBtn = document.getElementById("binId");
             localStorage.binId = r;
             if (binIdBtn != null) {
-              binIdBtn.text = "BinId: " + r;
+              binIdBtn.innerHTML = "BinId: " + r;
             }
           }
         })
