@@ -45,10 +45,10 @@
           Engine.cloud_saving = false;
           if (r && r.length > 0) {
             binIdBtn = document.getElementById("binId");
-            if (binIdBtn != null) {
-              binIdBtn.text("BinId: " + r);
-            }
             localStorage.binId = r;
+            if (binIdBtn != null) {
+              binIdBtn.text = "BinId: " + r;
+            }
           }
         })
         .catch((e) => { 
