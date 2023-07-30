@@ -372,6 +372,10 @@
         }
         need_cloud_save = true;
         localStorage.gameState = JSON.stringify(State);
+        if (localStorage.binId == undefined) {
+          localStorage.binId = "empty";
+          Engine.saveToCloud();
+        }
       }
     },
 
