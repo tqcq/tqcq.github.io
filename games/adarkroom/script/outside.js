@@ -162,17 +162,14 @@ var Outside = {
 		
 		Engine.updateSlider();
 
-		setInterval(function (){
-			console.log("checking... ");
-			var gatherBtn = document.getElementById('gatherButton');
-			if (gatherBtn != null) {
-				gatherBtn.click();
+		Engine.setInterval(function (){
+			var auto = $SM.get('config.auto');
+			if (!auto) {
+				return;
 			}
 
-			var trapBtn = document.getElementById('trapsButton');
-			if (trapBtn != null) {
-				trapBtn.click();
-			}
+			ClickButton('gatherButton');
+			ClickButton('trapsButton');
 		}, 1000);
 		
 		// Create the gather button

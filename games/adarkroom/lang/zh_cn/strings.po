@@ -111,10 +111,10 @@ msgid "sound off."
 msgstr "关闭声音"
 
 msgid "support import from binId"
-msgstr "支持从binId导入"
+msgstr "支持从BinId导入"
 
 msgid "tips: If there is no binid on footer, please wait for half a minute to open it again"
-msgstr "如果页脚没有binId，请等待半分钟再次打开"
+msgstr "如果页脚没有BinId，请等待半分钟再次打开"
 
 #: script/engine.js:137 
 msgid "选择语言"
@@ -274,7 +274,7 @@ msgstr "分享"
 
 #: script/engine.js:168
 msgid "save."
-msgstr "保存"
+msgstr "存档"
 
 #: script/engine.js:177
 msgid "dropbox."
@@ -1206,7 +1206,10 @@ msgstr "熊熊燃烧"
 
 #: script/room.js:604
 msgid "A Firelit Room"
-msgstr "生火间"
+msgstr "温暖房间"
+
+msgid "A Dark Room"
+msgstr "寒冷房间"
 
 #: script/room.js:642
 msgid "not enough wood to get the fire going"

@@ -66,7 +66,7 @@ var Space = {
 			left: '350px'
 		});
 		Space.startAscent();
-		Space._shipTimer = setInterval(Space.moveShip, 33);
+		Space._shipTimer = Engine.setInterval(Space.moveShip, 33);
 		Space._volumeTimer = setInterval(Space.lowerVolume, 1000);
 		AudioEngine.playBackgroundMusic(AudioLibrary.MUSIC_SPACE);
 	},
@@ -268,7 +268,7 @@ var Space = {
 			complete: Space.endGame
 		});
 		Space.drawStars();
-		Space._timer = setInterval(function() {
+		Space._timer = Engine.setInterval(function() {
 			Space.altitude += 1;
 			if(Space.altitude % 10 === 0) {
 				Space.setTitle();

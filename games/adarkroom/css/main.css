@@ -166,8 +166,10 @@ div.headerButton:first-child {
 }
 
 div.headerButton.selected, div.headerButton.selected:hover {
-	cursor: default;
-	text-decoration: underline;
+	cursor: none;
+	border-bottom: 1px solid;
+	text-decoration: none;
+	/* text-decoration: underline; */
 }
 
 div#outerSlider {
@@ -252,7 +254,8 @@ div#notifyGradient {
 div.button {
 	position: relative;
 	text-align: center;
-	border: 1px solid black;
+	border: 2px solid green;
+	border-radius: 6px;
 	width: 100px;
 	margin-bottom: 5px;
 	padding: 5px 10px;

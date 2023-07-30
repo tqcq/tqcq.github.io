@@ -42,7 +42,6 @@
 
       jsonBin.save(username, binId, Engine.generateExport64())
         .then((r) => {
-          Engine.cloud_saving = false;
           if (r && r.length > 0) {
             binIdBtn = document.getElementById("binId");
             localStorage.binId = r;
@@ -50,6 +49,7 @@
               binIdBtn.innerHTML = "BinId: " + r;
             }
           }
+          Engine.cloud_saving = false;
         })
         .catch((e) => { 
           Engine.cloud_saving = false;
@@ -582,7 +582,9 @@
       if(typeof Storage != 'undefined' && localStorage) {
         var prestige = Prestige.get();
         window.State = {};
+        oldBin = localStorage.binId;
         localStorage.clear();
+        localStorage.binId = oldBin;
         Prestige.set(prestige);
       }
       if(!noReload) {

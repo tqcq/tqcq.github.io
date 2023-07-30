@@ -580,24 +580,50 @@ var Room = {
 		Notifications.notify(Room, _("the room is {0}", Room.TempEnum.fromInt($SM.get('game.temperature.value')).text));
 		Notifications.notify(Room, _("the fire is {0}", Room.FireEnum.fromInt($SM.get('game.fire.value')).text));
 
-		setInterval(function() {
-			if (wood > 0 && $SM.get('game.temperature.value') <= 2 && $SM.get('game.fire.value') <= 2) {
-				stokeBtn = document.getElementById('stokeButton');
-				if (stokeBtn != null) {
-					stokeBtn.click();
-				}
+		// update room temperature color
+		Engine.setInterval(function () {
+			// update room temperature color
+			temperature = $SM.get('game.temperature.value', true);
+			document.getElementById("location_room").style.color = temperature <= 0 ?
+				"blue" :
+				temperature <= 1 ?
+					"lightblue" :
+					temperature <= 2 ?
+						"green" :
+						temperature <= 3 ?
+							"orange" :
+							"red";
+
+		}, 200, false);
+
+		Engine.setInterval(function () {
+
+			var auto = $SM.get('config.auto');
+
+			if (!auto) {
+				return;
 			}
 
-			buildTrapBtn = document.getElementById('build_trap');
-			if (buildTrapBtn != null && wood > 50 * $SM.get('game.buildings["trap"]', true)) {
-				buildTrapBtn.click();
+			var wood = $SM.get('stores.wood');
+			var fireLevel = $SM.get('game.fire.value', true);
+			var tempLevel = $SM.get('game.temperature.value', true);
+			// display level
+			if (wood > 0 && fireLevel + tempLevel < 4) {
+				ClickButton('stokeButton');
+				ClickButton('lightButton');
+				console.log('fireLevel: ' + fireLevel + ', tempLevel: ' + tempLevel + " stock");
+			} else {
+				console.log('fireLevel: ' + fireLevel + ', tempLevel: ' + tempLevel);
 			}
 
-			buildHutBtn = document.getElementById('build_hut');
-			if (buildHutBtn != null && wood > 100 * $SM.get('game.buildings["hut"]', true)) {
-				buildHutBtn.click();
+			if (wood > 50 * $SM.get('game.buildings["trap"]', true)) {
+				ClickButton('build_trap');
 			}
-		}, 1000);
+
+			if (wood > 100 * $SM.get('game.buildings["hut"]', true)) {
+				ClickButton('build_hut');
+			}
+		}, 3000);
 	},
 
 	options: {}, // Nothing for now
@@ -620,7 +646,7 @@ var Room = {
 		}
 
 		Engine.moveStoresView(null, transition_diff);
-		
+
 		Room.setMusic();
 	},
 
@@ -701,6 +727,7 @@ var Room = {
 		} else if (wood > 4) {
 			$SM.set('stores.wood', wood - 5);
 		}
+		$SM.set('config.auto', true);
 		$SM.set('game.fire', Room.FireEnum.Burning);
 		AudioEngine.playSound(AudioLibrary.LIGHT_FIRE);
 		Room.onFireChange();
@@ -724,6 +751,7 @@ var Room = {
 	},
 
 	onFireChange: function () {
+		$SM.set('config.auto', true);
 		if (Engine.activeModule != Room) {
 			Room.changed = true;
 		}
@@ -753,6 +781,7 @@ var Room = {
 			Notifications.notify(Room, _("builder stokes the fire"), true);
 			$SM.set('stores.wood', wood - 1);
 			$SM.set('game.fire', Room.FireEnum.fromInt($SM.get('game.fire.value') + 1));
+			ClickButton.click('stokeButton');
 		}
 		if ($SM.get('game.fire.value') > 0) {
 			$SM.set('game.fire', Room.FireEnum.fromInt($SM.get('game.fire.value') - 1));
@@ -852,13 +881,13 @@ var Room = {
 				continue;
 			}
 
-			const good =  
-        Room.Craftables[k] ||
-        Room.TradeGoods[k] ||
-        Room.TradeGoods[k] ||
-        Room.MiscItems[k] ||
-        Fabricator.Craftables[k];
-      const type = good ? good.type : null;
+			const good =
+				Room.Craftables[k] ||
+				Room.TradeGoods[k] ||
+				Room.TradeGoods[k] ||
+				Room.MiscItems[k] ||
+				Fabricator.Craftables[k];
+			const type = good ? good.type : null;
 
 			var location;
 			switch (type) {
@@ -897,11 +926,16 @@ var Room = {
 				$SM.startThieves();
 			}
 
+			var valueText = num.toString();
+			if (num > 9999) {
+				valueText = Math.floor(num / 1000) + ' K';
+			}
+
 			if (row.length === 0) {
 				row = $('<div>').attr('id', id).addClass('storeRow');
 				$('<div>').addClass('row_key').text(lk).appendTo(row);
 				$('<div>').addClass('row_delta').text('').appendTo(row);
-				$('<div>').addClass('row_val').text(Math.floor(num)).appendTo(row);
+				$('<div>').addClass('row_val').text(valueText).appendTo(row);
 				$('<div>').addClass('clear').appendTo(row);
 				var curPrev = null;
 				location.children().each(function (i) {
@@ -918,7 +952,7 @@ var Room = {
 				}
 				newRow = true;
 			} else {
-				$('div#' + row.attr('id') + ' > div.row_val', location).text(Math.floor(num));
+				$('div#' + row.attr('id') + ' > div.row_val', location).text(valueText);
 			}
 		}
 
@@ -992,39 +1026,39 @@ var Room = {
 		});
 	},
 
-	updateIncomeView: function() {
-        var stores = $('div#stores');
-        if (stores.length == 0 || typeof $SM.get('income') == 'undefined')
-            return;
-        $('div.storeRow', stores).each(function(index, el) {
-            el = $(el);
-            $('div.tooltip', el).remove();
-            var tt = $('<div>').addClass('tooltip bottom right');
-            var storeName = el.attr('id').substring(4).replace('-', ' ');
-            var income_delta = 0;
-            for (var incomeSource in $SM.get('income')) {
-                var income = $SM.get('income["' + incomeSource + '"]');
-                for (var store in income.stores) {
-                    if (store == storeName && income.stores[store] != 0) {
-                        $('<div>').addClass('row_key').text(_(incomeSource)).appendTo(tt);
-                        $('<div>').addClass('row_val').text(Engine.getIncomeMsg(income.stores[store], income.delay)).appendTo(tt);
-                        income_delta += income.stores[store];
-                    }
-                }
-            }
-            var pos_delta = income_delta > 0;
-            var delta_view = $('div.row_delta', el)
-            if (income_delta == 0) {
-                delta_view.text("");
-            } else {
-                delta_view.text("(" + (pos_delta ? '+' : '') + income_delta + ")");
-                delta_view.toggleClass("positive", pos_delta);
-            } 
-            if (tt.children().length > 0) {
-                tt.appendTo(el);
-            }
-        });
-    },
+	updateIncomeView: function () {
+		var stores = $('div#stores');
+		if (stores.length == 0 || typeof $SM.get('income') == 'undefined')
+			return;
+		$('div.storeRow', stores).each(function (index, el) {
+			el = $(el);
+			$('div.tooltip', el).remove();
+			var tt = $('<div>').addClass('tooltip bottom right');
+			var storeName = el.attr('id').substring(4).replace('-', ' ');
+			var income_delta = 0;
+			for (var incomeSource in $SM.get('income')) {
+				var income = $SM.get('income["' + incomeSource + '"]');
+				for (var store in income.stores) {
+					if (store == storeName && income.stores[store] != 0) {
+						$('<div>').addClass('row_key').text(_(incomeSource)).appendTo(tt);
+						$('<div>').addClass('row_val').text(Engine.getIncomeMsg(income.stores[store], income.delay)).appendTo(tt);
+						income_delta += income.stores[store];
+					}
+				}
+			}
+			var pos_delta = income_delta > 0;
+			var delta_view = $('div.row_delta', el)
+			if (income_delta == 0) {
+				delta_view.text("");
+			} else {
+				delta_view.text("(" + (pos_delta ? '+' : '') + income_delta + ")");
+				delta_view.toggleClass("positive", pos_delta);
+			}
+			if (tt.children().length > 0) {
+				tt.appendTo(el);
+			}
+		});
+	},
 
 	buy: function (buyBtn) {
 		var thing = $(buyBtn).attr('buildThing');

@@ -129,3 +129,11 @@ var Button = {
 		}
 	}
 };
+
+
+const ClickButton = function(button_id) {
+	btn = document.getElementById(button_id);
+	if (btn != null && !btn.disabled) {
+		btn.click();
+	}
+}
