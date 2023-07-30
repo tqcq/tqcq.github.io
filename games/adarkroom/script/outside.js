@@ -626,7 +626,7 @@ var Outside = {
 	
 	gatherWood: function() {
 		Notifications.notify(Outside, _("dry brush and dead branches litter the forest floor"));
-		var therAmt = $SM.get('game.buildings["cart"]', true) > 0 ? 50 : 10;
+		var gtherAmt = $SM.get('game.buildings["cart"]', true) > 0 ? 50 : 10;
 		$SM.add('stores.wood', gatherAmt);
 		AudioEngine.playSound(AudioLibrary.GATHER_WOOD);
 	},

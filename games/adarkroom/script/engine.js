@@ -6,6 +6,13 @@
     MAX_STORE: 99999999999999,
     SAVE_DISPLAY: 30 * 1000,
     GAME_OVER: false,
+    SAVE_PREFIX_V1: 'https://uocat.com/games/adarkroom/-v1-',
+    SAVE_PREFIX_V2: 'https://uocat.com/games/adarkroom/-v2-',
+    /**
+     * origin : base64
+     * v1: LZString + base64
+     * v2: pako + base64
+     */
 
     //object event types
     topics: {},
@@ -388,13 +395,53 @@
       });
     },
 
-    generateExport64: function(){
-      var string64 = Base64.encode(localStorage.gameState);
-      string64 = string64.replace(/\s/g, '');
-      string64 = string64.replace(/\./g, '');
-      string64 = string64.replace(/\n/g, '');
+    compressToBase64: function(input) {
+      const dataToCompress = input;
+      const compressionOptions = {
+          level: 9, // 设置压缩级别为最高级别 9
+      };
 
-      return string64;
+      // 压缩数据
+      const compressedData = pako.deflate(dataToCompress, compressionOptions);
+
+      // 将压缩后的数据转换为 Base64 编码
+      const base64CompressedData = btoa(String.fromCharCode.apply(null, compressedData));
+      return base64CompressedData;
+  },
+
+  // 封装解压缩函数，接受 Base64 编码作为输入，返回解压缩后的字符串
+  decompressFromBase64: function(input) {
+      const base64CompressedData = input;
+
+      // 将 Base64 编码转换为 Uint8Array
+      const compressedData = new Uint8Array(atob(base64CompressedData).split('').map(char => char.charCodeAt(0)));
+
+      // 解压缩数据
+      const decompressionOptions = { to: 'string' };
+      const decompressedData = pako.inflate(compressedData, decompressionOptions);
+      return decompressedData;
+  },
+
+    trimBase64: function(input) {
+      return input.replace(/\s/g, '')
+                  .replace(/\./g, '')
+                  .replace(/\n/g, '');
+    },
+
+    generateExport64: function(){
+      /*
+      var string64 = Base64.encode(LZString.compress(localStorage.gameState));
+      var nocompress = Base64.encode(localStorage.gameState);
+      */
+
+      // var string64 = LZString.compressToBase64(localStorage.gameState); 
+      var string64 = Engine.compressToBase64(localStorage.gameState);
+      var decodeTest = Engine.decompressFromBase64(string64);
+      // vs length
+      // console.log('LZString.compressToBase64', string64.length);
+      // console.log('pako.compressToBase64', pako64.length);
+
+      return Engine.SAVE_PREFIX_V2 + Engine.trimBase64(string64);
     },
 
     export64: function() {
@@ -406,11 +453,20 @@
     import64: function(string64) {
       Engine.event('progress', 'import');
       Engine.disableSelection();
-      string64 = string64.replace(/\s/g, '');
-      string64 = string64.replace(/\./g, '');
-      string64 = string64.replace(/\n/g, '');
-      var decodedSave = Base64.decode(string64);
-      localStorage.gameState = decodedSave;
+      var decodeFun = function(input) { return Base64.decode(input); };
+      if (string64.startsWith(Engine.SAVE_PREFIX_V1)) {
+        // remove SAVE_PREFIX prefix
+        string64 = string64.substring(Engine.SAVE_PREFIX_V1.length);
+        decodeFun = function(input) { return LZString.decompressFromBase64(input); };
+      } else if (string64.startsWith(Engine.SAVE_PREFIX_V2)) {
+        string64 = string64.substring(Engine.SAVE_PREFIX_V2.length);
+        decodeFun = function(input) { return Engine.decompressFromBase64(input); };
+      }
+
+      string64 = Engine.trimBase64(string64);
+      var gameState = decodeFun(string64); // decodeFun(string64);
+      localStorage.gameState = gameState;
+        
       location.reload();
     },
 
