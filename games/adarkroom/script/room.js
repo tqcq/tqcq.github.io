@@ -628,6 +628,7 @@ var Room = {
 
 			ClickButton('investigate');
 			ClickButton('backinside');
+			ClickButton('end');
 
 		}, 1000 * 60, false);
 
