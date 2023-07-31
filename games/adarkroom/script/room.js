@@ -596,7 +596,7 @@ var Room = {
 
 		}, 200, false);
 
-		Engine.setInterval(function() {
+		const autoClick = function() {
 			/** encounter */
 
 			/*
@@ -623,6 +623,8 @@ var Room = {
 
 			ClickButton('wood500');
 			ClickButton('wood100');
+			ClickButton('fur500');
+			ClickButton('fur100');
 			// ClickButton('deny');
 
 			ClickButton('learn');
@@ -651,6 +653,12 @@ var Room = {
 			ClickButton('backinside');
 			ClickButton('end');
 
+		};
+
+		// invoke auto click
+		Engine.setInterval(function() {
+			autoClick();
+			setTimeout(autoClick, 5 * 1000);
 		}, 1000 * 60);
 
 		Engine.setInterval(function () {
