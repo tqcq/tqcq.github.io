@@ -43,6 +43,7 @@ div#stores {
 	cursor: default;
 	padding: 5px 10px;
 	width: 200px;
+	height: auto;
 }
 
 div.storeRow {
@@ -57,4 +58,5 @@ div#weapons {
 	cursor: default;
 	padding: 5px 10px;
 	width: 200px;
+	height: auto;
 }
