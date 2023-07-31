@@ -597,6 +597,27 @@ var Room = {
 		}, 200, false);
 
 		Engine.setInterval(function() {
+			/** encounter */
+
+			/*
+			ClickButton('meat');
+			ClickButton('fur');
+			ClickButton('leather');
+			ClickButton('teeth');
+			ClickButton('cloth');
+			ClickButton('scales');
+			ClickButton('medicine');
+			ClickButton('iron');
+			*/
+
+
+			/** global */
+			ClickButton('spare');
+
+			/** outsite */
+			ClickButton('mourn');
+			ClickButton('heal');
+
 			ClickButton('build');
 			// ClickButton('deny');
 

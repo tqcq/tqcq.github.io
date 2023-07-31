@@ -126,6 +126,40 @@ var Outside = {
 			message: _('a crudely made charm')
 		}
 	],
+
+	assignWork: function() {
+		/*
+		gather_cap = $SM.get('game.workers_cap["gatherer"]', true);
+		if (gather_cap > gather) {
+			return;
+		}
+		*/
+		gather = $SM.get('game.population', true);
+		if (gather <= 0) {
+			return;
+		}
+
+		var modify = false;
+		for(var k in $SM.get('game.workers')) {
+			gather = $SM.get('game.population', true);
+			if (gather <= 0) {
+				break;
+			}
+
+			// num -= $SM.get('game.workers["'+k+'"]');
+			cap = $SM.get('game.workers_cap["'+k+'"]', true);
+			num = $SM.get('game.workers["'+k+'"]', true);
+			if (cap > num) {
+				modify = true;
+				adjustNum = Math.min(gather, cap - num);
+				$SM.add('game.workers["'+k+'"]', adjustNum);
+				$SM.add('game.population', -adjustNum);
+			}
+		}
+		if (modify) {
+			this.updateWorkersView();
+		}
+	},
 	
 	init: function(options) {
 		this.options = $.extend(
@@ -182,6 +216,9 @@ var Outside = {
 		}).appendTo('div#outsidePanel');
 
 		Outside.updateTrapButton();
+
+		// auto reassign work
+		// Engine.setInterval(this.assignWork, 1000, false);
 	},
 	
 	getMaxPopulation: function() {
@@ -229,6 +266,7 @@ var Outside = {
 				}
 			}
 		}
+		this.assignWork();
 	},
 	
 	destroyHuts: function(num, allowEmpty) {
@@ -257,6 +295,7 @@ var Outside = {
 				dead += inhabitants;
 			}
 		}
+		this.assignWork();
 		// this method returns the total number of victims, for further actions
 		return dead;
 	},
@@ -389,6 +428,7 @@ var Outside = {
 			var increaseAmt = Math.min(Outside.getNumGatherers(), btn.data);
 			Engine.log('increasing ' + worker + ' by ' + increaseAmt);
 			$SM.add('game.workers["'+worker+'"]', increaseAmt);
+			$SM.set('game.workers_cap["'+ worker +'"]', $SM.get('game.workers["' + worker + '"]', true));
 		}
 	},
 	
@@ -398,6 +438,7 @@ var Outside = {
 			var decreaseAmt = Math.min($SM.get('game.workers["'+worker+'"]') || 0, btn.data);
 			Engine.log('decreasing ' + worker + ' by ' + decreaseAmt);
 			$SM.add('game.workers["'+worker+'"]', decreaseAmt * -1);
+			$SM.set('game.workers_cap["'+ worker +'"]', $SM.get('game.workers["' + worker + '"]', true));
 		}
 	},
 	
@@ -506,6 +547,7 @@ var Outside = {
 						typeof $SM.get('game.workers["'+job+'"]') != 'number') {
 					Engine.log('adding ' + job + ' to the workers list');
 					$SM.set('game.workers["'+job+'"]', 0);
+					$SM.set('game.workers_cap["'+job+'"]', 0);
 					added = true;
 				}
 			}
