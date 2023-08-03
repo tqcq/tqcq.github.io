@@ -14,4 +14,4 @@ Allow: /posts/
 Allow: /rsshub/
 Allow: /services/
 Allow: /tags/
-Sitemap: /sitemap.xml
+Sitemap: https://uocat.com/sitemap.xml
