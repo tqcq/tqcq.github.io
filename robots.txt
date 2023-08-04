@@ -1,9 +1,17 @@
 User-agent: *
 Disallow: /css/
 Disallow: /fonts/
+Disallow: /games/adarkroom/audio/
+Disallow: /games/adarkroom/css/
+Disallow: /games/adarkroom/img/
+Disallow: /games/adarkroom/lib/
+Disallow: /games/adarkroom/lang/
+Disallow: /games/adarkroom/tools/
 Disallow: /images/
 Disallow: /js/
+Disallow: /lib/
 Disallow: /search/
+Disallow: /tools/paper/assets/
 Allow: /about/
 Allow: /archives/
 Allow: /categories/
