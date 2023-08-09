@@ -13,7 +13,7 @@
       
       <categories>
           
-          <category> git </category>
+          <category> Tool </category>
           
       </categories>
       
@@ -37,6 +37,12 @@
       
         <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h2 id="1-1-取消Chrome中打开Devonthink的弹窗"><a class="header-anchor" href="#1-1-取消Chrome中打开Devonthink的弹窗">¶</a>1.1 取消 Chrome 中打开 Devonthink 的弹窗</h2><p>我在使用 Devonthink 的时候，经常会遇到一个问题，就是在 Chrome 中点击 Devonthink 的链接，会弹出一个提示框，让我选择是否允许打开 Devonthink。</p><h3 id="1-1-1-原因"><a class="header-anchor" href="#1-1-1-原因">¶</a>1.1.1 原因</h3><pre><code>出现这个问题的原因参见是Chrome商业版策略设置，对不信任的协议进行弹窗提示。</code></pre><blockquote><p>参见 <a href="https://chromeenterprise.google/policies/?policy=URLAllowlist">URLAllowlist</a></p></blockquote><h3 id="1-1-2-解决方案"><a class="header-anchor" href="#1-1-2-解决方案">¶</a>1.1.2 解决方案</h3><pre><code>在 Mac 的 URLAllowlist 中添加要允许的协议即可，对DEVONThink其协议为 `x-devonthink://*`，所以在Mac中执行以下命令即可解决问题。</code></pre><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## Mac</span></span><br><span class="line">defaults write com.google.Chrome URLAllowlist -array-add <span class="string">'x-devonthink://*'</span></span><br></pre></td></tr></tbody></table></figure><blockquote><p>Linux 的配置方案参考 StackOverflow 问答:<br><a href="https://askubuntu.com/questions/1324149/how-to-configure-policies-preferences-for-chromium">how-to-configure-policies-preferences-for-chromium</a></p></blockquote>]]></content>
       
+      
+      <categories>
+          
+          <category> Tool </category>
+          
+      </categories>
       
       
         <tags>
@@ -88,7 +94,9 @@
       
       <categories>
           
-          <category> Container </category>
+          <category> IT </category>
+          
+          <category> Tool </category>
           
       </categories>
       
@@ -144,6 +152,8 @@
           
           <category> Linux </category>
           
+          <category> Learn </category>
+          
       </categories>
       
       
@@ -169,7 +179,7 @@
       
       <categories>
           
-          <category> Technology </category>
+          <category> Learn </category>
           
       </categories>
       
