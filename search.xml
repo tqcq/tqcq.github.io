@@ -193,6 +193,31 @@
     </entry>
     
     
+    
+    <entry>
+      <title>熊猫拿铁配置无线网卡</title>
+      <link href="/posts/8231/"/>
+      <url>/posts/8231/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h2 id="1-1-熊猫拿铁配置无线网卡"><a class="header-anchor" href="#1-1-熊猫拿铁配置无线网卡">¶</a>1.1 熊猫拿铁配置无线网卡</h2><h3 id="1-1-1-背景"><a class="header-anchor" href="#1-1-1-背景">¶</a>1.1.1 背景</h3><p>入手了一个熊猫拿铁板子，无奈自带的 <code>Wi-Fi</code> 传输速率感人，遂决定增加一块无线网卡<code>水星UD6S</code>。</p><h3 id="1-1-2-安装驱动"><a class="header-anchor" href="#1-1-2-安装驱动">¶</a>1.1.2 安装驱动</h3><p>首先安装 <code>DKSM</code>，<code>DKSM</code>（<code>Dynamic Kernel Module Support</code>）是用来生成内核模块的框架，每次更新内核时，都会自动编译相关模块，保证更新后驱动的可用性。</p><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install -y dkms</span><br></pre></td></tr></tbody></table></figure><h3 id="1-1-3-编译驱动"><a class="header-anchor" href="#1-1-3-编译驱动">¶</a>1.1.3 编译驱动</h3><p>驱动使用了开源项目 <a href="https://github.com/brektrou/rtl8821CU">rtl8821CU</a>, 执行下面的命令，等待安装完成即可</p><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 安装当前版本内核头文件</span></span></span><br><span class="line">sudo apt-get install -y linux-headers-`uname -r` </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 安装相关工具</span></span></span><br><span class="line">sudo apt-get install -y make gcc bc git</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 克隆代码，然后编译安装</span></span></span><br><span class="line">git clone https://github.com/brektrou/rtl8821CU.git</span><br><span class="line">cd rtl8821CU &amp;&amp; sudo bash dkms-install.sh</span><br></pre></td></tr></tbody></table></figure><h3 id="1-1-4-配置-wifi"><a class="header-anchor" href="#1-1-4-配置-wifi">¶</a>1.1.4 配置 wifi</h3><p>这里使用 <code>NetworkManager</code> 管理 <code>Wi-Fi</code></p><ul><li><p>首先安装 <code>NetworkManger</code></p>  <figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install -y network-manager</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 设置开机自启，并且立即启动 NetworkManager</span></span></span><br><span class="line">sudo systemctl enable --now NetworkManager</span><br></pre></td></tr></tbody></table></figure></li><li><p>查看可用设备</p>  <figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">nmcli device</span></span><br><span class="line">DEVICE           TYPE      STATE         CONNECTION</span><br><span class="line">wlx23438         wifi      disconnected  --</span><br><span class="line">wlan0            wifi      disconnected  --</span><br></pre></td></tr></tbody></table></figure><blockquote><p>这里有两个 wifi 设备，名字分别为 <code>wlx23438</code> 和 <code>wlan0</code></p></blockquote></li><li><p>查看可用 wifi</p>  <figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">nmcli device wifi</span></span><br><span class="line">IN-USE  SSID           MODE   CHAN  RATE        SIGNAL  BARS  SECURITY</span><br><span class="line">        angell         Infra  11    130 Mbit/s  49      ▂▄__  WPA2</span><br><span class="line">        1104           Infra  1     270 Mbit/s  45      ▂▄__  WPA1 WPA2</span><br><span class="line">        --             Infra  1     270 Mbit/s  45      ▂▄__  WPA1 WPA2</span><br><span class="line">        HUAWEI-0H1G91  Infra  1     130 Mbit/s  45      ▂▄__  WPA2</span><br><span class="line">        Xiaomi_4892    Infra  11    270 Mbit/s  45      ▂▄__  WPA1 WPA2</span><br><span class="line">        CMCC-xjcf_5G   Infra  1     130 Mbit/s  44      ▂▄__  WPA1 WPA2</span><br></pre></td></tr></tbody></table></figure></li><li><p>连接 wifi</p>  <figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nmcli device wifi connect "your-ssid" password "your-password" ifname wlx23438</span><br></pre></td></tr></tbody></table></figure><p>这里我们指定要链接的 <code>wifi</code> 和<code>密码</code>，并要求使用设备 <code>wlx23438</code>。</p></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> IT </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> linux,server </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
   
   
 </search>
